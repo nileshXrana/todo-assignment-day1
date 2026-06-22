@@ -68,7 +68,7 @@ export default function TodoApp() {
 
     return (
         <div className="max-w-100 min-w-[30vw] bg-gray-400 min-h-[90vh] my-10 mx-auto p-4 border-2 border-gray-200 shadow-2xl rounded-4xl font-sans">
-            <h1 className='font-bold text-center text-2xl p-1 mb-2 border bg-gray-600 text-gray-50 rounded-2xl'>Todo List</h1>
+            <h1 className='font-bold text-center text-2xl p-1 mb-2 border bg-blue-900 text-gray-50 rounded-2xl'>Todo List</h1>
 
             <form onSubmit={addTodo} className="flex gap-2 mb-5">
                 <input
@@ -76,10 +76,10 @@ export default function TodoApp() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Add a new task..."
-                    className="flex-1 p-2 rounded-xl bg-blue-50 border-2 border-[#0070f3]"
+                    className="flex-1 p-2 rounded-xl bg-blue-50 border-2 border-[#004fa8]"
 
                 />
-                <button type="submit" className="px-4 py-2 rounded-lg bg-[#0070f3] text-white border-none cursor-pointer">
+                <button type="submit" className="px-4 py-2 rounded-lg bg-blue-900 text-white border-none cursor-pointer">
                     Add
                 </button>
 
@@ -102,7 +102,7 @@ export default function TodoApp() {
                             disabled={!todo.completed}
                             className={`px-2 py-1 rounded border border-[#ff4d4f] ${todo.completed
                                     ? 'bg-[#ff4d4f] text-white opacity-100 cursor-pointer'
-                                    : 'bg-white text-[#ff4d4f] opacity-40 cursor-not-allowed'  
+                                    : 'bg-white text-[#ff4d4f] opacity-40 cursor-not-allowed'
                                 }`}
                         >
                             Delete
