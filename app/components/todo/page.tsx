@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { LuLoader } from "react-icons/lu";
+import { MdDelete } from "react-icons/md";
+import { IoIosAdd } from "react-icons/io";
 
 interface Todo {
     id: string;
@@ -67,7 +69,7 @@ export default function TodoApp() {
     );
 
     return (
-        <div className="max-w-100 min-w-[30vw] bg-gray-400 min-h-[90vh] my-10 mx-auto p-4 border-2 border-gray-200 shadow-2xl rounded-4xl font-sans">
+        <div className="max-w-100 min-w-[30vw] bg-gray-700 min-h-[90vh] my-10 mx-auto p-4 border-2 border-gray-200 shadow-2xl rounded-4xl font-sans">
             <h1 className='font-bold text-center text-2xl p-1 mb-2 border bg-blue-900 text-gray-50 rounded-2xl'>Todo List</h1>
 
             <form onSubmit={addTodo} className="flex gap-2 mb-5">
@@ -80,7 +82,10 @@ export default function TodoApp() {
 
                 />
                 <button type="submit" className="px-4 py-2 rounded-lg bg-blue-900 text-white border-none cursor-pointer">
-                    Add
+                    <p className='flex items-center justify-center'>
+                        Add
+                        <IoIosAdd className='inline-block mr-1' />
+                    </p>
                 </button>
 
             </form>
@@ -89,7 +94,7 @@ export default function TodoApp() {
             <ul className="p-2">
                 {todos.sort((a, b) => a.text.localeCompare(b.text)).map((todo) => (
                     <li key={todo.id} className="flex items-center justify-between py-2 border-b border-[#eee]">
-                        <label className={`flex items-center gap-2.5 cursor-pointer ${todo.completed ? 'line-through text-[#535353]' : ' text-black'}`}>
+                        <label className={`flex items-center gap-2.5 cursor-pointer ${todo.completed ? 'line-through text-[#b4b4b4]' : ' text-white'}`}>
                             <input
                                 type="checkbox"
                                 checked={todo.completed}
@@ -105,7 +110,7 @@ export default function TodoApp() {
                                     : 'bg-white text-[#ff4d4f] opacity-40 cursor-not-allowed'
                                 }`}
                         >
-                            Delete
+                        <MdDelete />
                         </button>
                     </li>
 
