@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { LuLoader } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
-import { IoIosAdd } from "react-icons/io";
+import { FaPlus } from "react-icons/fa";
 
 interface Todo {
     id: string;
@@ -82,9 +82,9 @@ export default function TodoApp() {
 
                 />
                 <button type="submit" className="px-4 py-2 rounded-lg bg-blue-900 text-white border-none cursor-pointer">
-                    <p className='flex items-center justify-center'>
+                    <p className='flex items-center justify-center gap-1'>
                         Add
-                        <IoIosAdd className='inline-block mr-1' />
+                        <FaPlus className='inline-block mr-1' /> 
                     </p>
                 </button>
 
