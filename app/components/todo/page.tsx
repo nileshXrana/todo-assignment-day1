@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { LuLoader } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
+import { useRouter } from 'next/navigation';
 
 interface Todo {
     id: string;
@@ -15,6 +16,7 @@ export default function TodoApp() {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
+    const router = useRouter();
 
     // Fetch stored items:
     useEffect(() => {
@@ -44,7 +46,7 @@ export default function TodoApp() {
         };
 
         setTodos([...todos, newTodo]);
-        
+
         setInputValue('');
     };
 
@@ -62,14 +64,20 @@ export default function TodoApp() {
         setTodos(todos.filter((todo) => todo.id !== id));
     };
 
-    if (!isLoaded) return(
-        <div className='max-w-100 min-w-[30vw] min-h-[90vh] flex items-center justify-center my-10 mx-auto p-5 border-2 border-gray-200 shadow-2xl font-sans'>
-            loading...<LuLoader className='animate-spin' />
-        </div>  
+    // redict to detail page:
+    const handleDetail = (text: string) => {
+        const slug = encodeURIComponent(text.toLowerCase().replace(/\s+/g, '-'));
+        router.push(`/${slug}`);
+    };
+
+    if (!isLoaded) return (
+        <div className='text-6xl text-red-500 max-w-100 min-w-[30vw] min-h-[90vh] flex items-center justify-center my-10 mx-auto p-5 border-2 border-gray-200 shadow-2xl font-sans'>
+            <LuLoader className='animate-spin' />
+        </div>
     );
 
     return (
-        <div className="max-w-100 min-w-[30vw] bg-gray-700 min-h-[90vh] my-10 mx-auto p-4 border-2 border-gray-200 shadow-2xl rounded-4xl font-sans">
+        <div className="max-w-100 min-w-[30vw] bg-gray-800 min-h-[90vh] my-10 mx-auto p-4 border-2 border-gray-200 shadow-2xl rounded-4xl font-sans">
             <h1 className='font-bold text-center text-2xl p-1 mb-2 border bg-blue-900 text-gray-50 rounded-2xl'>Todo List</h1>
 
             <form onSubmit={addTodo} className="flex gap-2 mb-5">
@@ -84,7 +92,7 @@ export default function TodoApp() {
                 <button type="submit" className="px-4 py-2 rounded-lg bg-blue-900 text-white border-none cursor-pointer">
                     <p className='flex items-center justify-center gap-1'>
                         Add
-                        <FaPlus className='inline-block mr-1' /> 
+                        <FaPlus className='inline-block mr-1' />
                     </p>
                 </button>
 
@@ -93,7 +101,7 @@ export default function TodoApp() {
 
             <ul className="p-2">
                 {todos.sort((a, b) => a.text.localeCompare(b.text)).map((todo) => (
-                    <li key={todo.id} className="flex items-center justify-between py-2 border-b border-[#eee]">
+                    <li key={todo.id} className="flex items-center justify-between py-2 border-b border-[#eee] bg-black min-h-14 rounded-lg px-2 mb-2">
                         <label className={`flex items-center gap-2.5 cursor-pointer ${todo.completed ? 'line-through text-[#b4b4b4]' : ' text-white'}`}>
                             <input
                                 type="checkbox"
@@ -102,16 +110,26 @@ export default function TodoApp() {
                             />
                             {todo.text}
                         </label>
-                        <button
-                            onClick={() => deleteTodo(todo.id)}
-                            disabled={!todo.completed}
-                            className={`px-2 py-1 rounded border border-[#ff4d4f] ${todo.completed
+                        <div className='flex items-center justify-center gap-1'>
+
+                            <button
+                                onClick={() => deleteTodo(todo.id)}
+                                disabled={!todo.completed}
+                                className={`px-2 py-1 rounded border border-[#ff4d4f] hover:scale-125 transition-all ease-in-out ${todo.completed
                                     ? 'bg-[#ff4d4f] text-white opacity-100 cursor-pointer'
                                     : 'bg-white text-[#ff4d4f] opacity-40 cursor-not-allowed'
-                                }`}
-                        >
-                        <MdDelete />
-                        </button>
+                                    }`}
+                            >
+                                <MdDelete />
+                            </button>
+
+                            <button
+                                className='cursor-pointer bg-green-500 p-1 px-2 rounded-sm ml-2 text-gray-700 hover:bg-green-600 hover:text-gray-200 hover:scale-115 transition-all ease-in-out'
+                                onClick={() => handleDetail(todo.text)}
+                            >
+                                detail
+                            </button>
+                        </div>
                     </li>
 
                 ))}
